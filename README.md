@@ -1,6 +1,15 @@
 # VirgilAblohGPT 🥷🏻
 The Virgil Abloh Chatbot is an AI-powered fashion recommender system built using Streamlit. It utilizes pre-trained models to provide recommendations, information, and engage in fashion-related conversations. The chatbot is designed to assist users with various fashion tasks and topics. Additional functionalities and working videos will be released soon.
 
+# Fashion Recommender System 
+The Virgil Abloh Chatbot is an extended part of the fashion recommender system using the ResNet50 model. The recommender system analyzes the visual features of fashion products and provides similar recommendations based on the input image. The ResNet50 model is used for feature extraction, and the Nearest Neighbors algorithm is employed to identify visually similar products.
+
+The code for the fashion recommender system can be found in the FashionGPT GitHub repository (https://github.com/knowrohit/FashionGPT). It includes functionalities such as feature extraction, recommendation generation, image display, and product information. The Virgil Abloh Chatbot utilizes the fashion recommender system as a component to enhance its fashion-related capabilities.
+
+Please note that the functionality of the Virgil Abloh Chatbot and the fashion recommender system may evolve over time, and additional functionalities and improvements may be added in the future.
+
+For any further questions or assistance, feel free to reach out to Rohit Tiwari, the developer of the Virgil Abloh Chatbot, via email at knowrohit.07@gmail.com.
+
 ## Coming Soon: Additional Functionalities and Working Videos 👽
 We are continuously working to enhance the Virgil Abloh Chatbot and provide more functionalities. Soon, we will be releasing additional features and improvements. We will also share working videos that demonstrate the chatbot's capabilities, showcasing how it can assist users in different fashion-related tasks and topics.
 
