@@ -1,14 +1,34 @@
 
+
+
 import streamlit as st
 from streamlit_chat import message as st_message
 from gtts import gTTS
 from IPython.display import Audio
-from transformers import AutoTokenizer, AutoModelForCausalLM, AutoModel
+import transformers
+import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM, AutoModel, AutoConfig
 
 @st.cache_resource
 def get_models():
-    tokenizer = AutoTokenizer.from_pretrained("/content/drive/MyDrive/bernard/GLM_tokenizer", trust_remote_code=True) #THUDM/chatglm-6b
-    model = AutoModel.from_pretrained("/content/drive/MyDrive/bernard/GLM_model", trust_remote_code=True).half().cuda() #THUDM/chatglm-6b
+    # tokenizer = AutoTokenizer.from_pretrained("/content/drive/MyDrive/bernard/GLM_tokenizer", trust_remote_code=True)
+    # model = AutoModel.from_pretrained("/content/drive/MyDrive/bernard/GLM_model", trust_remote_code=True).half().cuda()
+    model = AutoModelForCausalLM.from_pretrained("/content/drive/MyDrive/bernard/mpt7b_model", trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained("/content/drive/MyDrive/bernard/mpt7b_tok")
+    name = 'mosaicml/mpt-7b-chat'
+
+    config = transformers.AutoConfig.from_pretrained(name, trust_remote_code=True)
+    config.attn_config['attn_impl'] = 'triton'
+    config.init_device = 'cuda:0' # For fast initialization directly on GPU!
+    config.max_seq_len = 4096 # (input + output) tokens can now be up to 4096
+
+
+    model = transformers.AutoModelForCausalLM.from_pretrained(
+      name,
+      config=config,
+      torch_dtype=torch.bfloat16, # Load model weights in bfloat16
+      trust_remote_code=True
+    )
     model.eval()
     return tokenizer, model
 
@@ -20,7 +40,8 @@ st.set_page_config(page_title="Fashion Concierge", layout="wide")
 
 # Topics related to fashion
 FASHION_TOPICS = [ 
-    "Open chat", # string for generic discussion
+    "Open chat",
+    "", # string for generic discussion
     "summer fashion", 
     "winter trends", 
     "vintage style", 
@@ -35,28 +56,28 @@ FASHION_TOPICS = [
 ]
 
 TASKS = {
-    "Coding": "write code",
-    "Summarization": "summarize the content",
-    "Emotion Detection": "sentiment analysis",
-    "Friendship": "be a friend",
-    "Education": "be a teacher",
-    "Humor": "do comedy and crack jokes",
-    "Storytelling": "tell short stories",
-    "Translation": "translate text",
-    "Writing": "create a piece of writing",
-    "Fact-checking": "verify information",
-    "Advice": "give advice",
-    "Forecast": "predict future trends",
-    "Analysis": "analyze data",
-    "Brainstorming": "generate ideas",
-    "Negotiation": "negotiate a deal",
-    "Motivation": "provide motivation",
+    "Generate code :": "write code",
+    "Summarize :": "summarize the content",
+    "Sentiment analysis :": "sentiment analysis",
+    "Act as a Friend :": "be a friend",
+    "Act as a Teacher :": "be a teacher",
+    "Tell me a joke !": "do comedy and crack jokes",
+    "Generate short stories": "tell short stories",
+    "Translate the text : ": "translate text",
+    "Write in detail ": "create a piece of writing",
+    "Verify the information :": "verify information",
+    "Give me advice: ": "give advice",
+    "Forecast the prompt/content ": "predict future trends",
+    "Analyze the data : ": "analyze data",
+    "Generate/Brainstorm ideas : ": "generate ideas",
+    "Negotiate a deal : ": "negotiate a deal",
+    "Provide motivation : ": "provide motivation",
 }
 TASK_MAX_LENGTH = {
-    "Coding": 350,
-    "Summarization": 100,
-    "Emotion Detection": 200,
-    "Friendship": 75,
+    "Generate code :": 350,
+    "Summarize :": 100,
+    "Sentiment analysis :": 200,
+    "Act as a Friend :": 75,
     "Education": 100,
     "Humor": 70,
     "Storytelling": 350,
@@ -127,6 +148,7 @@ def generate_answer():
 
     st.session_state.chat_history.append({"message": user_input, "is_user": True})
     st.session_state.chat_history.append({"message": response, "is_user": False})
+
 
 st.text_input("You: ", key="user_input", on_change=generate_answer)
 
