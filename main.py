@@ -59,8 +59,8 @@ TASKS = {
     "Generate code :": "write code",
     "Summarize :": "summarize the content",
     "Sentiment analysis :": "sentiment analysis",
-    "Act as a Friend :": "be a friend",
-    "Act as a Teacher :": "be a teacher",
+    "Act as my Friend :": "be a friend",
+    "Act as my Teacher :": "be a teacher",
     "Tell me a joke !": "do comedy and crack jokes",
     "Generate short stories": "tell short stories",
     "Translate the text : ": "translate text",
@@ -71,17 +71,17 @@ TASKS = {
     "Analyze the data : ": "analyze data",
     "Generate/Brainstorm ideas : ": "generate ideas",
     "Negotiate a deal : ": "negotiate a deal",
-    "Provide motivation : ": "provide motivation",
+    "Provide me motivation : ": "provide motivation",
 }
 TASK_MAX_LENGTH = {
-    "Generate code :": 350,
-    "Summarize :": 100,
+    "Generate code :": 200,
+    "Summarize :": 200,
     "Sentiment analysis :": 200,
-    "Act as a Friend :": 75,
+    "Act as a Friend :": 100,
     "Act as a Teacher :": 100,
-    "Tell me a joke !": 70,
+    "Tell me a joke !": 100,
     "Generate short stories": 350,
-    "Translate the text :": 70,
+    "Translate the text :": 100,
     "Write in detail ": 300,
     "Verify the information :": 250,
     "Give me advice: ": 200,
@@ -115,7 +115,7 @@ def predict(user_input, topic, task):
     # Move input_tokens to GPU
     input_tokens = input_tokens.to('cuda')
 
-    max_length = TASK_MAX_LENGTH.get(task, 100)  # default to 200 if task is not found in the dictionary
+    max_length = TASK_MAX_LENGTH.get(task, 200)  # default to 200 if task is not found in the dictionary
 
     # Generate the model's output
     output = model.generate(input_tokens, max_length=max_length, num_return_sequences=1, no_repeat_ngram_size=2)
