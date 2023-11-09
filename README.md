@@ -1,5 +1,5 @@
 # VirgilAblohGPT 🥷🏻
-The Virgil Abloh Chatbot is an AI-powered fashion recommender system built using Streamlit. It utilizes GLM (added mpt7b model as well) to provide recommendations, information, and engage in fashion-related conversations. The chatbot is designed to assist users with various fashion tasks and topics. Additional functionalities and working videos will be released soon.
+The Virgil Abloh Chatbot is an AI-powered fashion recommender system built using Streamlit. It utilizes GLM (added mpt7b model as well + plug in any HF model) to provide recommendations, information, and engage in fashion-related conversations. The chatbot is designed to assist users with various fashion tasks and topics. Additional functionalities and working videos will be released soon.
 
 # Fashion Recommender System  
 The Virgil Abloh AI is an extended part of the fashion recommender system using the ResNet50 model. The recommender system analyzes the visual features of fashion products and provides similar recommendations based on the input image. The ResNet50 model is used for feature extraction, and the Nearest Neighbors algorithm is employed to identify visually similar products.
